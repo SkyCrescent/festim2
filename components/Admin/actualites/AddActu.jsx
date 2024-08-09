@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from "next/image";
 import picture from "../../../public/picture.png";
 //import f from '../../pages/api/publication'
-export default function AddActu({modal,SetModal}) {
+export default function AddActu({modal,SetModal,handleClickButton8}) {
    const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
    const [filteredData, setFilteredData] = useState([]); // Initialize with all dat
    const [filteredData2, setFilteredData2] = useState([]); // Initialize with all dat
@@ -211,6 +211,7 @@ export default function AddActu({modal,SetModal}) {
             typemedia: "",
          });
          getData2()
+         handleClickButton8()
          SetModal(false)
       } catch (error) {
          console.error(error);

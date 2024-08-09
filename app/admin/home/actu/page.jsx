@@ -18,14 +18,17 @@ export default function page(){
    const [loading2 , SetLoading2 ] = useState(false)
    const [filteredData, setFilteredData] = useState([]); // Initialize with all dat
    const [number , SetNumber] = useState(0)
+   const [MyId , SetId] = useState(0)
    const [hoveredItem, setHoveredItem] = useState(null);
    const [modalEvent ,SetEvent ] = useState(false)
    const [openSubMenuId, setOpenSubMenuId] = useState(false);
    const [openSubMenu, setOpenSubMenu] = useState(false);
+   const [formDelete , SetDelete] = useState(false)
    const pathname = usePathname();
-
    const router = useRouter();
-
+   const handleClickButton8 = () => {
+      getData()
+   };
    function formatDate(apiDate) {
       // Séparer la date en jour, mois et année
       const [day, month, year] = apiDate.split('/').map(Number);
@@ -59,6 +62,25 @@ export default function page(){
       getData()
       //  console.log("ddd",MyId)
    }, []);
+
+   const deletData = async (MyId) => {
+      // console.log(MyId)
+      try {
+         const formData = new FormData();
+         // Effectuez la requête HTTP en utilisant Axios
+         const response = await axios.post(`${apiUrl}/actu/delete_Poste.php?id=${MyId}`, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
+            },
+         });
+         SetDelete(false)
+         getData()
+         console.log("Truc ajouté avec succès ", response);
+      } catch (error) {
+         console.error(error);
+      }
+
+   };
 
 
    return(
@@ -229,13 +251,13 @@ export default function page(){
                                           <div
                                              className={pathname.includes('seeEvents') ? 'hidden' : 'relative h-[50%] w-[100%] md:w-[60%] mx-auto text-center flex justify-between'}>
 
+                                             {/*<button*/}
+                                             {/*   className="bg-green-500 text-[14px] text-black h-10 w-48 m-4 rounded hover:bg-green-300   "*/}
+                                             {/*   onClick={() => GoToUpdate(`${mook.id}`)}>*/}
+                                             {/*   Modifer*/}
+                                             {/*</button>*/}
                                              <button
-                                                className="bg-green-500 text-[14px] text-black h-10 w-48 m-4 rounded hover:bg-green-300   "
-                                                onClick={() => GoToUpdate(`${mook.id}`)}>
-                                                Modifer
-                                             </button>
-                                             <button
-                                                className="bg-red-500 text-[14px] text-black h-10 w-52  m-4 rounded hover:bg-red-400"
+                                                className="bg-red-500 text-[14px] text-black h-10 w-52 mx-auto  m-4 rounded hover:bg-red-400"
                                                 onClick={() => {
                                                    SetDelete(true)
                                                    SetId(`${mook.id}`)
@@ -272,8 +294,25 @@ export default function page(){
 
          </div>
 
-         {modalEvent ? <AddActu modal={modalEvent} SetModal={SetEvent}/> : null}
-
+         {modalEvent ? <AddActu modal={modalEvent} SetModal={SetEvent} handleClickButton8={handleClickButton8}/> : null}
+         {
+            formDelete ? (
+               <div className="fixed top-0 left-0 z-50 bg-black/70 w-screen h-screen overflow-y-auto">
+                  <div className="w-full flex justify-center my-52">
+                     <div className={`flex relative w-[30%] bg-sky-100 shadow rounded-lg p-6 `}>
+                        <div className="flex flex-col items-center justify-center mx-10  space-y-6">
+                           <div className="flex flex-col items-center justify-center">
+                              <h2 className={`w-[124%] `}>Vous allez supprimer cette enregistrement </h2>
+                              <h2>en ete vous sure </h2>
+                           </div>
+                           <button className={`bg-red-500 text-white rounded w-64 h-10 hover:bg-red-400`} onClick={()=>{deletData(MyId)}}>Supprimer</button>
+                           <button className={`bg-blue-500 text-white rounded w-64 h-10 hover:bg-blue-400`} onClick={()=>{SetDelete(false)}} >Annuler</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            ) : null
+         }
 
       </>
    )

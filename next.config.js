@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Utiliser le nouvel output pour les exports statiques
+//  output: 'export', // Utiliser le nouvel output pour les exports statiques
 
   // trailingSlash: true, // Ajoute un slash à la fin de chaque URL
    //distDir: 'sort', // Le dossier de sortie de build, changez 'build' par le dossier de votre choix

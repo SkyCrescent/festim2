@@ -23,13 +23,12 @@ import logo2 from "@/public/AFFICHE FESTTM AFRIQUE 2024copie23.png";
 import GASSACKYS from "@/public/SEM FERREOL GASSACKYS.png"
 import AddReservation from "@/components/AddReservation";
 import discours from '@/public/icons/discourse_127px.png'
-
+import Notifications from "@/components/Notifications";
 export default function page(){
    const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
    const [number , SetNumber] = useState(0)
    const [loading , SetLoading ] = useState(false)
    const [loading2 , SetLoading2 ] = useState(false)
-
    const [filteredData, setFilteredData] = useState([]); // Initialize with all dat
    const router = useRouter();
    const [ formattedDate2 ,SetformattedDate] = useState('')
@@ -85,7 +84,17 @@ export default function page(){
 
       },
    ]
+  let number2 =0
+   const [ ShowNotifications , SetNotifications] = useState(false)    // constante pour afficher et cacher les notifications
+   const [valueNotification, setValueNotification] = useState(false); //constante qui permettra d'actualise la page de workspace
+   const updateValueNotifications = (newValue2) => {
+      setValueNotification(newValue2);
+   };
 
+
+   const handleClickButton8 = () => {
+      SetNotifications(true)
+   };
 
    const [scrollIndex, setScrollIndex] = useState(0);
    const itemWidth = 21; // Adjust this value based on your item width and gap
@@ -119,27 +128,52 @@ export default function page(){
 
 
 
+   const getData = async () => {
+      try {
+         // Remplacez l'URL par la bonne URL de votre API
+
+         const response = await axios.get(`${apiUrl}/evenements/get_allEvent.php`);
+         // const response = await axios.get(`${apiUrl}/evenements/get_allEvent.php`);
+
+         console.log(response.data && response.data.recu && response.data.recu.length > 0)
+         if (response.data && response.data.recu && response.data.recu.length > 0) {
+            // Vérifiez que la réponse contient les données attendues
+            console.log("la jointure",response.data.recu)
+            setFilteredData(response.data.recu)
+            console.log(response.data.recu.length)
+            SetNumber(response.data.recu.length)
+            number2 = response.data.recu.length
+            console.log(number)
+            console.log(number2)
+            SetLoading(true)
+         } else {
+            console.log("La réponse de l'API est incorrecte ou ne contient pas de données.",response);
+         }
+      } catch (error) {
+         console.error("Une erreur s'est produite lors de la récupération des données de l'API : ", error);
+      }
+   };
 
 
    useEffect(() => {
 
-      const getData = async () => {
+     const getData2 = async () => {
          try {
             // Remplacez l'URL par la bonne URL de votre API
-
             const response = await axios.get(`${apiUrl}/evenements/get_allEvent.php`);
-            // const response = await axios.get(`${apiUrl}/evenements/get_allEvent.php`);
 
-            console.log(response.data && response.data.recu && response.data.recu.length > 0)
-            if (response.data && response.data.recu && response.data.recu.length > 0) {
-               // Vérifiez que la réponse contient les données attendues
-               console.log("la jointure",response.data.recu)
-               setFilteredData(response.data.recu)
-               SetNumber(response.data.recu.length)
-               console.log(number)
-               SetLoading(true)
+            // Assurez-vous que la réponse est au format JSON
+            const data = JSON.parse(response.data);
+console.log(data)
+            // Vérifiez que la réponse contient les données attendues
+            if (data && data.recu && Array.isArray(data.recu) && data.recu.length > 0) {
+               console.log("la jointure", response);
+               setFilteredData(data.recu);
+               SetNumber(data.recu.length);
+               console.log(number);
+               SetLoading(true);
             } else {
-               console.log("La réponse de l'API est incorrecte ou ne contient pas de données.",response);
+               console.log("La réponse de l'API est incorrecte ou ne contient pas de données.", response);
             }
          } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération des données de l'API : ", error);
@@ -1474,9 +1508,12 @@ SetnumReservation(id)
 
 
          {
-            Reservation ? (<AddReservation NumReservation={NumReservation} SetReservation={SetReservation}/>) : null
+            Reservation ? (<AddReservation NumReservation={NumReservation} SetReservation={SetReservation} handleClickButton8={handleClickButton8}/>) : null
          }
 
+         {
+            ShowNotifications ? (  < Notifications SetNotifications={SetNotifications}  valueNotification={valueNotification} /> ) :null
+         }
 
       </>
    )

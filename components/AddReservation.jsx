@@ -5,7 +5,7 @@ import picture from "@/public/picture.png";
 import close from '@/public/icons/multiply.png'
 import axios from "axios";
 
-export default function AddReservation({NumReservation ,SetReservation}){
+export default function AddReservation({NumReservation ,SetReservation,handleClickButton8}){
    const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
    const [Errors,SetErrors] = useState({})
    const [isSubmit,SetIsSubmit] = useState(false)
@@ -111,6 +111,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
          label: "Votre Pays de résidence",
          className:
             "text-[9px] md:text-[15px] relative w-[100%] h-[88%] py-2 px-4 text-black border rounded-[10px] border-black/40 bg-transparent py-2 px-4 h-8 focus:outline-none focus:border-green-600",
+
          error: values.pays === "" ? 'Veuillez indiquer votre prénom' : null
       } ,
 
@@ -345,8 +346,6 @@ export default function AddReservation({NumReservation ,SetReservation}){
             formData.append('email', values.email);
             formData.append('photo', values.media);
             formData.append('id_evenement', values.id);
-
-
             formData.append('pays', values.pays);
             formData.append('genre', values.genre);
             formData.append('profession', values.proffession);
@@ -360,6 +359,8 @@ export default function AddReservation({NumReservation ,SetReservation}){
             });
             setFinish(true)
             console.log("Truc ajouté avec succès ", response);
+            handleClickButton8()
+            SetReservation(false)
 
             setValues({
                nom: "",
@@ -468,27 +469,6 @@ export default function AddReservation({NumReservation ,SetReservation}){
       }
    };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    const [loading , SetLoading] = useState(false )
    setTimeout(()=>{
       // SetAlldisplay(false)
@@ -510,7 +490,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
          >
             <div className="w-full h-[90%] flex justify-center my-52 md:my-96 lg:my-8">
                <div
-                  className={` relative  flex justify-evenly h-[96%] w-[80%] bg-white border border-gray-700  shadow rounded-lg p-2 ${loading ? 'scale-x-100 scale-y-100 opacity-100' : 'scale-x-0 scale-y-0 opacity-0'}  transition duration-500    `}>
+                  className={` relative  flex justify-evenly h-[100%] w-[86%] bg-white border border-gray-700  shadow rounded-lg p-2 ${loading ? 'scale-x-100 scale-y-100 opacity-100' : 'scale-x-0 scale-y-0 opacity-0'}  transition duration-500    `}>
 
 
                   {/*<span onClick={() => {*/}
@@ -533,7 +513,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
                   <div
                      className="relative h-[100%] w-[30%] hidden md:block  z-20  font-bold text-2xl  flex  uppercase">
                      <div
-                        className="   relative items-center justify-center h-[70%] w-[100%]  flex-col md:flex-row top-36 left-4 cursor-default  ">
+                        className="   relative items-center justify-center h-[70%] w-[100%]  flex-col md:flex-row top-44 left-4 cursor-default  ">
                         <div
                            className="relative h-auto w-[100%]  font-[Gotham] uppercase  text-lg md:text-3xl lg:text-5xl  text-blue-500 ">
 
@@ -546,7 +526,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
                      </div>
 
 
-                     <div className="relative w-[100%] h-[20%] md:h-[30%] text-sm items-center -left-4 -top-28 flex md:justify-evenly ">
+                     <div className="relative w-[100%] h-[20%] md:h-[30%] text-sm items-center -left-4 -top-24 flex md:justify-evenly ">
                         <button
                            className="relative  md:w-[90%] lg:w-[80%] h-[80%] md:h-[60%] lg:h-[30%] bg-sky-700 hover:bg-green-800 text-white text-center transition duration-300 transform hover:scale-105 px-4 py-2 rounded-md font-normal"
                            onClick={handleSummit}>
@@ -624,8 +604,8 @@ export default function AddReservation({NumReservation ,SetReservation}){
                                                 <input
                                                    placeholder={item.placeholder}
                                                    name={item.name}
-                                                   className={isSubmit && item.error ?
-                                                      "text-[9px] md:text-[15px] relative w-[94%] h-[100%] py-2 px-4  text-black border rounded-[10px] border-red-600 bg-transparent    focus:outline-none focus:border-blue-500"
+                                                   className={isSubmit && item.error ? "text-[9px] md:text-[16px] relative h-[90%] w-[90%] text-black border rounded-[10px] border-red-500 bg-transparent py-2 px-4 focus:outline-none focus:border-green-600"
+
                                                       : item.className}
                                                    type={item.type}
                                                    onChange={(e) => handleChange(e)}
@@ -658,7 +638,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
                                                    placeholder={item.placeholder}
                                                    name={item.name}
                                                    className={isSubmit && item.error ?
-                                                      "text-[9px] md:text-[15px] relative w-[94%] h-[100%] py-2 px-4  text-black border rounded-[10px] border-red-600 bg-transparent   focus:outline-none focus:border-blue-500"
+                                                      "text-[9px] md:text-[16px] relative h-[90%] w-[90%]  text-black border rounded-[10px] border-red-600 bg-transparent py-2 px-4 focus:outline-none focus:border-green-600"
                                                       : item.className}
                                                    type={item.type}
                                                    onChange={(e) => handleChange2(e)}
@@ -685,21 +665,23 @@ export default function AddReservation({NumReservation ,SetReservation}){
                      </div>
 
 
-                     <div className="relative w-[100%] h-[58%] -top-4   ">
+                     <div className="relative w-[100%] h-[58%] -top-4  ">
                         {input3.map((item) => (
                            <div key={item.id}
-                                className="left-14  relative h-[24%] top-2    w-[100%] md:w-[80%]  mx-auto   ">
+                                className="left-24  relative h-[24%] top-2    w-[100%] md:w-[80%]  mx-auto   ">
 
                               {item.type === 'select' ? (
-                                    <div className="h-[80%] w-[95%] mx-auto  cursor-pointer">
+                                    <div className="h-[80%] w-[80%] mx-auto  cursor-pointer">
                                        <label
                                           className="text-[9px] md:text-[12px] font-[poppins] font-semibold text-black  relative h-[30%] w-[50%]">{item.label}</label>
                                        <select
                                           key={item.id}
-                                          className={item.className}
+                                          className={isSubmit && item.error ?
+                                             "text-[9px] md:text-[16px] relative h-[80%] w-[100%] text-black border rounded-[10px] border-red-500 bg-transparent py-2 px-4 focus:outline-none focus:border-green-600"
+                                             : item.className}
                                           name={item.name}
                                           onChange={handleChange /* Remplacez cela par votre logique */}
-                                          value={values.couleur || ""}
+                                          value={values.genre || ""}
                                        >
 
                                           {input3[1].options.map((option) => (
@@ -715,16 +697,16 @@ export default function AddReservation({NumReservation ,SetReservation}){
 
                                        </select>
 
-                                       <div>
-                                          {isSubmit && item.error ? (
-                                             <div className="text-[70%] text-red-600 ">{item.error}</div>
-                                          ) : null}
-                                       </div>
+                                       {/*<div>*/}
+                                       {/*   {isSubmit && item.error ? (*/}
+                                       {/*      <div className="text-[70%] text-red-600 ">{item.error}</div>*/}
+                                       {/*   ) : null}*/}
+                                       {/*</div>*/}
                                     </div>
                                  ) :
                                  (
                                     <div
-                                       className="rounded-md  relative h-[80%] md:h-[100%] w-[95%] mx-auto   "
+                                       className="rounded-md  relative h-[80%] md:h-[100%] w-[80%] mx-auto   "
                                        key={item.id}>
                                        <label
                                           className="text-[9px] md:text-[12px] font-[poppins] font-semibold text-black  relative h-[30%] w-[50%]">{item.label}</label>
@@ -734,7 +716,7 @@ export default function AddReservation({NumReservation ,SetReservation}){
                                              placeholder={item.placeholder}
                                              name={item.name}
                                              className={isSubmit && item.error ?
-                                                "text-[9px] md:text-[15px] relative w-[94%] h-[70%] py-2 px-4  text-black border rounded-[10px] border-red-600 bg-transparent   focus:outline-none focus:border-blue-500"
+                                                "text-[9px] md:text-[15px] relative w-[100%] h-[88%] py-2 px-4 text-black border rounded-[10px] border-red-500 bg-transparent py-2 px-4 h-8 focus:outline-none focus:border-green-600"
                                                 : item.className}
                                              type={item.type}
                                              onChange={(e) => handleChange(e)}

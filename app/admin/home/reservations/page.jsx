@@ -26,9 +26,9 @@ export default function page(){
    const [formSchool , SetSchool] = useState(false)
    const [formDelete , SetDelete] = useState(false)
    const [focus6 , SetFocus6] = useState(false)
-
-
-
+   const [values, setValues] = useState({
+      service : ""
+   });
    const getData = async () => {
       try {
          // Remplacez l'URL par la bonne URL de votre API
@@ -37,8 +37,8 @@ export default function page(){
          if (response.data && response.data.recu && response.data.recu.length > 0) {
             // Vérifiez que la réponse contient les données attendues
             console.log("la jointure",response.data.recu)
-            setFilteredData(response.data.recu.nom)
-            SetNumber(response.data.recu.length)
+            setFilteredData(response.data.recu)
+           // SetNumber(response.data.recu.length)
             SetLoading(true)
          } else {
             console.log("La réponse de l'API est incorrecte ou ne contient pas de données.",response);
@@ -201,21 +201,24 @@ export default function page(){
                         onBlur={() => SetFocus6(false)}
                         name="service"
                         className={"text-large relative w-[100%] text-gray-700 border rounded-lg bg-white/90 border-gray-300 py-2 px-4 h-12 focus:outline-none focus:border-blue-500"}
-                        onChange={(e) => handleChange(e)}
-                        // value={values.service}
+                        onChange={(e) =>  setValues(prevValues => ({
+                           ...prevValues,
+                           service:(e.target.value)
+                        }))}
+                         value={values.service}
                      >
-                        <option value='0'></option>
-                        {/*<option value='1'>${filteredData.map((filteredDatum) => (*/}
-                        {/*   <div>*/}
-
-                        {/*   </div>*/}
-                        {/*)) }</option>*/}
-
+                        <br></br>
+                        <option value=""></option>
+                        {filteredData.map((option) => (
+                           <option key={option.id} value={option.id}>
+                              {option.nom}
+                           </option>
+                        ))}
 
                      </select>
                      <span
-                        className={(focus6) ? "absolute left-3 p-1 w-auto top-6 px-1 text-xs font-black text-blue-900 -translate-y-9 duration-300" : "absolute tracking-wide pointer-events-none duration-300 left-0 top-3 px-5 text-sky-700"}>
-                                 Fichiers Envoyés
+                        className={(focus6 || values.service ) ? "absolute left-3 p-1 w-auto top-6 px-1 text-xs font-black text-blue-900 -translate-y-9 duration-300" : "absolute tracking-wide pointer-events-none duration-300 left-0 top-3 px-5 text-sky-700"}>
+                                 Evénements de FESTIM
                                 </span>
                   </div>
                </div>
@@ -239,7 +242,7 @@ export default function page(){
                      {
                         loading
                            ? (
-                              filteredData2.map((subItem, subIndex) => (
+                              filteredData2 .map((subItem, subIndex) => (
                                  <div
                                     className={subIndex % 2 === 0 ? 'bg-transparent border-b border-blue-400  cursor-pointer font-medium text-black hover:bg-gray-100 ' : 'bg-transparent text-black border-b border-blue-400 font-medium cursor-pointer hover:bg-gray-100'}>
                                     <li key={subIndex}
