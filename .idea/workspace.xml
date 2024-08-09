@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="085df0ef-0082-4b0c-bec6-b975f9d0b26c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/home/actu/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/home/actu/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/home/reservations/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/home/reservations/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/presentation/festim/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/presentation/festim/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/AddReservation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AddReservation.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Admin/actualites/AddActu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Admin/actualites/AddActu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="085df0ef-0082-4b0c-bec6-b975f9d0b26c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +90,7 @@
       <workItem from="1722378944479" duration="6941000" />
       <workItem from="1722511448617" duration="7233000" />
       <workItem from="1723027295656" duration="17524000" />
-      <workItem from="1723197121787" duration="4672000" />
+      <workItem from="1723197121787" duration="5021000" />
     </task>
     <servers />
   </component>
